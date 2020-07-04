@@ -1,0 +1,32 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    --grey: rgb(180,180,180);
+    --green-dark: rgb(32,47,48);
+    --green-bright: rgb(0,143,125);
+    font-family: 'Overpass', sans-serif;
+    font-weight: 200;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    position: fixed;
+    overflow: hidden;
+    font-size: clamp(1rem, 5vw, 2rem);
+
+}
+
+button, input, optgroup, select, textarea {
+    font-family: inherit; /* 1 */
+    font-size: 100%; /* 1 */
+    font-weight: inherit;
+    margin: 0; /* 2 */
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
