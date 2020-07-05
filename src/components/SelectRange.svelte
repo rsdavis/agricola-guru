@@ -13,6 +13,11 @@
     let sentinelRef = null
     const dispatch = createEventDispatcher()
 
+    // cheap hack to scroll to beginning when selected is reset to 0
+    $: {
+        if (selected === 0 && optionsRef) optionsRef.scrollLeft = 0
+    }
+
     onMount(() => {
         optionsRef.addEventListener('scroll', () => {
             const { left, right } = sentinelRef.getBoundingClientRect()
@@ -74,6 +79,12 @@
 
     .left {
         text-align: left;
+        padding-right: 0.5em;
+    }
+
+    .right {
+        text-align: right;
+        padding-left: 0.5em;
     }
 
     .options {

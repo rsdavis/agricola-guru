@@ -18,13 +18,17 @@
     let boarScore
     let cattleScore
     let stableScore
+    let beggingCards
+    let cardScore
 
     $: roomScore = roomType * roomCount
+    $: beggingScore = -3 * beggingCards
     $: totalScore = familyScore + roomScore
         + fieldScore + pastureScore
         + unusedScore + stableScore
         + grainScore + vegScore
         + sheepScore + boarScore + cattleScore
+        + beggingScore + cardScore
 
     function setDefaults () {
         familyScore = 6
@@ -39,6 +43,8 @@
         boarScore = -1
         cattleScore = -1
         stableScore = 0
+        beggingCards = 0
+        cardScore = 0
     }
 
     setDefaults()
@@ -140,7 +146,7 @@
             <SelectRange
                 min={0}
                 max={20}
-                selected={0}
+                selected={-unusedScore}
                 on:select={ e => unusedScore = -e.detail.value }
             />
         </section>
@@ -252,6 +258,32 @@
                 on:select={ e => cattleScore = e.detail.value }
             />
         </section>
+
+        <section>
+            <SectionHeader
+                label='Begging Cards'
+                score={beggingScore}
+            />
+            <SelectRange
+                min={0}
+                max={10}
+                selected={beggingCards}
+                on:select={ e => beggingCards = e.detail.value }
+            />
+        </section>
+
+        <section>
+            <SectionHeader
+                label='Card Points'
+                score={cardScore}
+            />
+            <SelectRange
+                min={0}
+                max={50}
+                selected={cardScore}
+                on:select={ e => cardScore = e.detail.value }
+            />
+        </section>
     </div>
 
     <footer>
@@ -276,7 +308,7 @@
         overflow: auto;
         background-color: var(--green-dark);
         height: calc(100% - 120px);
-        padding: 1em;
+        padding: 2em 1em;
         margin: 0 auto;
     }
 
