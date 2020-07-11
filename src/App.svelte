@@ -5,24 +5,26 @@
     import SelectNumerical from './components/SelectNumerical.svelte'
     import Select from './components/Select.svelte'
     import SelectRange from './components/SelectRange.svelte'
+    import SelectSlider from './components/SelectSlider.svelte'
 
     let familyScore
     let roomType
     let roomCount
     let fieldScore
     let pastureScore
-    let unusedScore
     let grainScore
     let vegScore
     let sheepScore
     let boarScore
     let cattleScore
     let stableScore
+    let unusedSpaces
     let beggingCards
     let cardScore
 
     $: roomScore = roomType * roomCount
     $: beggingScore = -3 * beggingCards
+    $: unusedScore = -1 * unusedSpaces
     $: totalScore = familyScore + roomScore
         + fieldScore + pastureScore
         + unusedScore + stableScore
@@ -36,7 +38,7 @@
         roomCount = 2
         fieldScore = -1
         pastureScore = -1
-        unusedScore = 0
+        unusedSpaces = 0
         grainScore = -1
         vegScore = -1
         sheepScore = -1
@@ -139,19 +141,6 @@
                 ]}
                 selected={pastureScore}
                 on:select={ e => pastureScore = e.detail.value }
-            />
-        </section>
-
-        <section>
-            <SectionHeader
-                label='Unused Spaces'
-                score={unusedScore}
-            />
-            <SelectRange
-                min={0}
-                max={20}
-                selected={-unusedScore}
-                on:select={ e => unusedScore = -e.detail.value }
             />
         </section>
 
@@ -268,11 +257,29 @@
                 label='Begging Cards'
                 score={beggingScore}
             />
-            <SelectRange
-                min={0}
-                max={10}
+            <Select
+                options={[
+                    { label: '0',   value: 0 },
+                    { label: '1',   value: 1 },
+                    { label: '2', value: 2 },
+                    { label: '3', value: 3 },
+                    { label: '4',  value: 4 },
+                    { label: '5',  value: 5 }
+                ]}
                 selected={beggingCards}
                 on:select={ e => beggingCards = e.detail.value }
+            />
+        </section>
+
+        <section>
+            <SectionHeader
+                label='Unused Spaces'
+                score={unusedScore}
+            />
+            <SelectSlider
+                min={0}
+                max={25}
+                bind:value={unusedSpaces}
             />
         </section>
 
@@ -281,11 +288,10 @@
                 label='Card Points'
                 score={cardScore}
             />
-            <SelectRange
+            <SelectSlider
                 min={0}
-                max={50}
-                selected={cardScore}
-                on:select={ e => cardScore = e.detail.value }
+                max={25}
+                bind:value={cardScore}
             />
         </section>
     </div>
@@ -306,10 +312,10 @@
     }
 
     .content {
-        position: fixed;
+        position: absolute;
         width: 100%;
         max-width: 600px;
-        overflow: auto;
+        overflow-y: auto;
         background-color: var(--green-dark);
         height: calc(100% - 120px);
         padding: 2em 1em;

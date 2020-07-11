@@ -52,6 +52,6 @@
 
     .active {
         background-color: white;
-        color: var(--green-bright);
+        color: var(--green-dark);
     }
 </style>
